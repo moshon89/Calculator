@@ -126,5 +126,23 @@ namespace UnitTestCalculator
             Console.WriteLine(result);
             Assert.IsTrue(result.Contains("floating point couldn't be before brackets"));
         }
+
+        [TestMethod]
+        public void StartWithOperator()
+        {
+            calcModel.Calculate("*8+3");
+            string result = calcModel.ErrorMessage;
+            Console.WriteLine(result);
+            Assert.IsTrue(result.Contains("expression cannot start with operator"));
+        }
+
+        [TestMethod]
+        public void BracketsStartWithOperator()
+        {
+            calcModel.Calculate("8+3*[/4-2]");
+            string result = calcModel.ErrorMessage;
+            Console.WriteLine(result);
+            Assert.IsTrue(result.Contains("brackets cannot start with operator"));
+        }
     }
 }

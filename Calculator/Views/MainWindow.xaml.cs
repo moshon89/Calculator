@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows;
-using Calculator.Models;
+﻿using System.Windows;
 using Calculator.ViewModels;
 
 namespace Calculator.Views

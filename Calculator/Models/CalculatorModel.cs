@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Calculator.Models
 {
@@ -71,6 +69,8 @@ namespace Calculator.Models
             regexes.Add(new Regex(@"][0-9]"), "an operator should be between brackets and number");// find [2]3
             regexes.Add(new Regex(@"[.0-9][[]"), "floating point couldn't be before brackets");// find 2.[3]
             regexes.Add(new Regex(@"][.0-9]"), "floating point couldn't be after brackets");// find [2].3
+            regexes.Add(new Regex(@"[[][*/+]"), "brackets cannot start with operator");// find [/2-3]
+            regexes.Add(new Regex(@"^[+*/]"), "expression cannot start with operator");// find /2-3
             Match match;
             foreach (KeyValuePair<Regex, string> regex in regexes)
             {
@@ -96,7 +96,11 @@ namespace Calculator.Models
             for (int i = 0; i < exression.Length; i++)
             {
                 char c = exression[i];
-                if (c == '-' && exression[i-1] == '[')
+                if (i == 0 && c == '-') //case exression start with minus
+                {
+                    withSpaces += "0 " + c + " ";
+                }
+                else if (c == '-' && exression[i-1] == '[') ////case brackets start with minus
                 {
                     withSpaces += "0 " + c + " ";
                 }
@@ -113,12 +117,21 @@ namespace Calculator.Models
             return withSpaces;
         }
 
-
+        /// <summary>
+        /// return whether string is operator or not
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public bool IsOperator(string str)
         {
             return str.Equals("+") || str.Equals("/") || str.Equals("*") || str.Equals("-");
         }
 
+        /// <summary>
+        /// return whether string is bracket or not
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public bool IsBrackets(string str)
         {
             return str.Equals("[") || str.Equals("]");
@@ -126,11 +139,12 @@ namespace Calculator.Models
 
         /// <summary>
         /// ***Full Disclosure***
-        /// i knew this algorithm before from "Software structure" course..
+        /// i knew this algorithm before from "Software structure" course.
         /// i have read this algorithm pseudo code but the implementation is mine..
         /// 
         /// main calculating algorithm - works by evaluate Infix arithmetic expression
         /// and push the operators to stack of operators and the numbers to stack of numbers
+        /// gets them out in right order and calculate the result
         /// </summary>
         /// <param name="expression"></param>
         private void CalculateResult(char[] expression)

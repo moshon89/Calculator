@@ -1,17 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Calculator.Commands
 {
     class DelegateCommand<T> : ICommand
     {
-        private Action<T> _execute;
-        private Func<bool> _canExecute;
+        private Action<T> _execute; //the action we want to execute 
+        private Func<bool> _canExecute; //to check if the command cannot be executed for some reason
 
+        /// <summary>
+        /// we have 2 classes "DelegateCommand" one is Generic for the command could get parameters
+        /// end the second is for commands with no parameters
+        /// </summary>
+        /// <param name="execute"></param>
+        /// <param name="canExecute"></param>
         public DelegateCommand(Action<T> execute, Func<bool> canExecute = null)
         {
             _execute = execute;
@@ -35,6 +37,9 @@ namespace Calculator.Commands
             _execute((T)parameter);
         }
 
+        /// <summary>
+        /// notify that can execute may be changed
+        /// </summary>
         public event EventHandler CanExecuteChanged
         {
             add
@@ -77,6 +82,9 @@ namespace Calculator.Commands
             _execute();
         }
 
+        /// <summary>
+        /// notify that can execute may be changed
+        /// </summary>
         public event EventHandler CanExecuteChanged
         {
             add

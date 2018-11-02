@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Calculator.Commands;
 using Calculator.Models;
@@ -19,14 +15,17 @@ namespace Calculator.ViewModels
         private DelegateCommand _resetPressedCommand;
         private DelegateCommand _delPressedCommand;
         private DelegateCommand _resultPressedCommand;
-        private bool _isAfterResult = false;
+        private bool _isAfterResult = false; //help us to using the result for next calculating
 
         public CalculatorViewModel()
         {
-            _calculator = new CalculatorModel();
+            _calculator = new CalculatorModel(); //the viewModel "allowed" to know the model
             _textBox = _calculator.Default;
         }
 
+        /// <summary>
+        /// when enter or "=" pressed
+        /// </summary>
         public ICommand ResultPressedCommand
         {
             get
@@ -35,26 +34,20 @@ namespace Calculator.ViewModels
                 {
                     _resultPressedCommand = new DelegateCommand(() =>
                     {
+                        //if there is an error from last calculation - clean it
                         if (TextBox.Contains(_calculator.Error)) TextBox = _calculator.Default;
-                        string result = "";
-                        if (TextBox.StartsWith("-"))
-                        {
-                            result = _calculator.Calculate("0" + TextBox);
-                        }
-                        else
-                        {
-                            result = _calculator.Calculate(TextBox);
-                          
-                        }
 
                         _isAfterResult = true;
-                        TextBox = result;
+                        TextBox = _calculator.Calculate(TextBox);
                     });
                 }
                 return _resultPressedCommand;
             }
         }
 
+        /// <summary>
+        /// when Backspace or del one character pressed
+        /// </summary>
         public ICommand DelPressedCommand
         {
             get
@@ -79,6 +72,9 @@ namespace Calculator.ViewModels
             }
         }
 
+        /// <summary>
+        /// when operator pressed
+        /// </summary>
         public ICommand OperatorPressedCommand
         {
             get
