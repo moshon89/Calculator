@@ -5,8 +5,98 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Calculator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        SizeToContent="WidthAndHeight" ResizeMode="NoResize"
+        Title="{Binding Title}">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBox Grid.ColumnSpan="4" Grid.Row="1" Grid.Column="1" Text="{Binding TextBox}"></TextBox>
+
+        <Button Grid.Row="2" Grid.Column="1" Content="AC" Command="{Binding ResetPressedCommand}" Foreground="Coral"></Button>
+        <Button Grid.Row="2" Grid.Column="2" Content="DEL" Command="{Binding DelPressedCommand}"></Button>
+        <Button Grid.Row="2" Grid.Column="3" Content="÷" Command="{Binding OperatorPressedCommand}"  CommandParameter="/"></Button>
+        <Button Grid.Row="2" Grid.Column="4" Content="*" Command="{Binding OperatorPressedCommand}"  CommandParameter="*"></Button>
+
+        <Button Grid.Row="3" Grid.Column="1" Content="7" Command="{Binding DigitPressedCommand}" CommandParameter="7"></Button>
+        <Button Grid.Row="3" Grid.Column="2" Content="8" Command="{Binding DigitPressedCommand}" CommandParameter="8"></Button>
+        <Button Grid.Row="3" Grid.Column="3" Content="9" Command="{Binding DigitPressedCommand}" CommandParameter="9"></Button>
+        <Button Grid.Row="3" Grid.Column="4" Content="-" Command="{Binding OperatorPressedCommand}" CommandParameter="-"></Button>
+
+        <Button Grid.Row="4" Grid.Column="1" Content="4" Command="{Binding DigitPressedCommand}" CommandParameter="4"></Button>
+        <Button Grid.Row="4" Grid.Column="2" Content="5" Command="{Binding DigitPressedCommand}" CommandParameter="5"></Button>
+        <Button Grid.Row="4" Grid.Column="3" Content="6" Command="{Binding DigitPressedCommand}" CommandParameter="6"></Button>
+        <Button Grid.Row="4" Grid.Column="4" Content="+" Command="{Binding OperatorPressedCommand}" CommandParameter="+"></Button>
+
+        <Button Grid.Row="5" Grid.Column="1" Content="1" Command="{Binding DigitPressedCommand}" CommandParameter="1"></Button>
+        <Button Grid.Row="5" Grid.Column="2" Content="2" Command="{Binding DigitPressedCommand}" CommandParameter="2"></Button>
+        <Button Grid.Row="5" Grid.Column="3" Content="3" Command="{Binding DigitPressedCommand}" CommandParameter="3"></Button>
+        <Button Grid.Row="5" Grid.Column="4" Content="." Command="{Binding DigitPressedCommand}" CommandParameter="."></Button>
+
+        <Button Grid.Row="6" Grid.Column="1" Content="0" Command="{Binding DigitPressedCommand}" CommandParameter="0"></Button>
+        <Button Grid.Row="6" Grid.Column="2" Content="[" Command="{Binding DigitPressedCommand}" CommandParameter="["></Button>
+        <Button Grid.Row="6" Grid.Column="3" Content="]" Command="{Binding DigitPressedCommand}" CommandParameter="]"></Button>
+        <Button Grid.Row="6" Grid.Column="4" Content="=" Command="{Binding ResultPressedCommand}" Background="Coral" Foreground="White"></Button>
     </Grid>
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding DigitPressedCommand}" CommandParameter="0" Key="NumPad0"/>
+        <KeyBinding Command="{Binding DigitPressedCommand}" CommandParameter="1" Key="NumPad1"/>
+        <KeyBinding Command="{Binding DigitPressedCommand}" CommandParameter="2" Key="NumPad2"/>
+        <KeyBinding Command="{Binding DigitPressedCommand}" CommandParameter="3" Key="NumPad3"/>
+        <KeyBinding Command="{Binding DigitPressedCommand}" CommandParameter="4" Key="NumPad4"/>
+        <KeyBinding Command="{Binding DigitPressedCommand}" CommandParameter="5" Key="NumPad5"/>
+        <KeyBinding Command="{Binding DigitPressedCommand}" CommandParameter="6" Key="NumPad6"/>
+        <KeyBinding Command="{Binding DigitPressedCommand}" CommandParameter="7" Key="NumPad7"/>
+        <KeyBinding Command="{Binding DigitPressedCommand}" CommandParameter="8" Key="NumPad8"/>
+        <KeyBinding Command="{Binding DigitPressedCommand}" CommandParameter="9" Key="NumPad9"/>
+        <!-- <KeyBinding Command="{Binding DigitPressedCommand}" CommandParameter="0" Key="D0"/> -->
+        <!-- <KeyBinding Command="{Binding DigitPressedCommand}" CommandParameter="1" Key="D1"/> -->
+        <!-- <KeyBinding Command="{Binding DigitPressedCommand}" CommandParameter="2" Key="D2"/> -->
+        <!-- <KeyBinding Command="{Binding DigitPressedCommand}" CommandParameter="3" Key="D3"/> -->
+        <!-- <KeyBinding Command="{Binding DigitPressedCommand}" CommandParameter="4" Key="D4"/> -->
+        <!-- <KeyBinding Command="{Binding DigitPressedCommand}" CommandParameter="5" Key="D5"/> -->
+        <!-- <KeyBinding Command="{Binding DigitPressedCommand}" CommandParameter="6" Key="D6"/> -->
+        <!-- <KeyBinding Command="{Binding DigitPressedCommand}" CommandParameter="7" Key="D7"/> -->
+        <!-- <KeyBinding Command="{Binding DigitPressedCommand}" CommandParameter="8" Key="D8"/> -->
+        <!-- <KeyBinding Command="{Binding DigitPressedCommand}" CommandParameter="9" Key="D9"/> -->
+        <KeyBinding Command="{Binding OperatorPressedCommand}" CommandParameter="/" Key="Divide"/>
+        <KeyBinding Command="{Binding OperatorPressedCommand}" CommandParameter="+" Key="Add"/>
+        <KeyBinding Command="{Binding OperatorPressedCommand}" CommandParameter="-" Key="Subtract"/>
+        <KeyBinding Command="{Binding OperatorPressedCommand}" CommandParameter="*" Key="Multiply"/>
+        <KeyBinding Command="{Binding DigitPressedCommand}" CommandParameter="." Key="Decimal"/>
+        <KeyBinding Command="{Binding ResultPressedCommand}" Key="Enter"/>
+        <KeyBinding Command="{Binding DelPressedCommand}" Key="Back"/>
+        <KeyBinding Command="{Binding ResetPressedCommand}" Key="Escape"/>
+        <KeyBinding Command="{Binding DigitPressedCommand}" CommandParameter="[" Key="OemOpenBrackets"/>
+        <KeyBinding Command="{Binding DigitPressedCommand}" CommandParameter="]" Key="OemCloseBrackets"/>
+
+    </Window.InputBindings>
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="50"></Setter>
+            <Setter Property="Width" Value="65"></Setter>
+            <Setter Property="Focusable" Value="False"></Setter>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="100"></Setter>
+            <Setter Property="Width" Value="260"></Setter>
+            <Setter Property="IsReadOnly" Value="True"></Setter>
+        </Style>
+    </Window.Resources>
 </Window>

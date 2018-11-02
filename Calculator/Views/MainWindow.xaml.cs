@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using Calculator.Models;
+using Calculator.ViewModels;
 
 namespace Calculator.Views
 {
@@ -10,6 +13,7 @@ namespace Calculator.Views
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new CalculatorViewModel();
         }
     }
 }
