@@ -97,7 +97,34 @@ namespace UnitTestCalculator
             calcModel.Calculate("[2][1]");
             string result = calcModel.ErrorMessage;
             Console.WriteLine(result);
-            Assert.IsTrue(result.Contains("an operator should be before brackets"));
+            Assert.IsTrue(result.Contains("an operator should be between 2 brackets expression"));
+        }
+
+        [TestMethod]
+        public void BracketBeforeNumber()
+        {
+            calcModel.Calculate("[2]70");
+            string result = calcModel.ErrorMessage;
+            Console.WriteLine(result);
+            Assert.IsTrue(result.Contains("an operator should be between brackets and number"));
+        }
+
+        [TestMethod]
+        public void PointAfterBracket()
+        {
+            calcModel.Calculate("[2].70");
+            string result = calcModel.ErrorMessage;
+            Console.WriteLine(result);
+            Assert.IsTrue(result.Contains("floating point couldn't be after brackets"));
+        }
+
+        [TestMethod]
+        public void PointBeforeBracket()
+        {
+            calcModel.Calculate("2.[70]");
+            string result = calcModel.ErrorMessage;
+            Console.WriteLine(result);
+            Assert.IsTrue(result.Contains("floating point couldn't be before brackets"));
         }
     }
 }

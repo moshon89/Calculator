@@ -59,22 +59,28 @@ namespace Calculator.Models
             return true;
         }
 
+        /// <summary>
+        /// checks if the brackets and float points in expression are in reasonable places
+        /// </summary>
+        /// <param name="expression"></param>
         private void CheckBracketsSyntax(string expression)
         {
-            Regex regex = new Regex(@"[0-9][[]"); // find 2[3]
-            Regex regex2 = new Regex(@"][[]"); // find [2][3]
-//          Regex regex = new Regex(@"[(][0-9]*.[0-9]*[+/*-][0-9]*.[0-9]*[)]");
-
-            Match match = regex.Match(expression);
-            bool success = match.Success;
-            match = regex2.Match(expression);
-            success |= match.Success;
-            if (success)
+            Dictionary<Regex,string> regexes = new Dictionary<Regex, string>();
+            regexes.Add(new Regex(@"[0-9][[]"), "an operator should be before brackets");// find 2[3]
+            regexes.Add(new Regex(@"][[]"), "an operator should be between 2 brackets expression");// find [2][3]
+            regexes.Add(new Regex(@"][0-9]"), "an operator should be between brackets and number");// find [2]3
+            regexes.Add(new Regex(@"[.0-9][[]"), "floating point couldn't be before brackets");// find 2.[3]
+            regexes.Add(new Regex(@"][.0-9]"), "floating point couldn't be after brackets");// find [2].3
+            Match match;
+            foreach (KeyValuePair<Regex, string> regex in regexes)
             {
-                _errorMessage = "an operator should be before brackets";
-                throw new Exception(_errorMessage);
+                match = regex.Key.Match(expression);
+                if (match.Success)
+                {
+                    _errorMessage = regex.Value;
+                    throw new Exception(_errorMessage);
+                }
             }
-
         }
 
         /// <summary>
